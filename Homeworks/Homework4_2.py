@@ -13,5 +13,5 @@ def get_cats_info(path):
 
 
 
-data = get_cats_info(r'C:\Users\nikit\Python\1\Homeworks\cats.txt')
+data = get_cats_info(r'C:\Users\nikit\Python\1\Homeworks\Cats.txt')
 print(data)
