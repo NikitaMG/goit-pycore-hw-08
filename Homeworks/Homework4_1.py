@@ -17,10 +17,10 @@ def total_salary(path):
     except FileNotFoundError:
         print(f"Файл за шляхом '{path}' не знайдено.")
         return 0, 0
-    
+
     average_salary = total_sum / count
     return total_sum, average_salary
 
 
-total, average = total_salary(r'C:\Users\nikit\Python\1\Homeworks\employee_info.txt')
+total, average = total_salary(r'C:\Users\nikit\Python\1\Homeworks\Employee_info.txt')
 print(f"Загальна сума заробітної плати: {total}, Середня заробітна плата: {average}")
