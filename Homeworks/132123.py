@@ -1,0 +1,15 @@
+from collections import deque
+
+goals = [
+    {"type": "fast", "task": "finish course"},
+    {"type": "slow", "task": "take photos"},
+    {"type": "fast", "task": "100 words"},
+    {"type": "slow", "task": "new outfit"}
+]
+task_line = deque()
+for task in goals:
+    if task["type"] == "fast":
+        task_line.appendleft(task)
+    else:
+        task_line.append(task)
+print(task_line)
