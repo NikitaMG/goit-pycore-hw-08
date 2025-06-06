@@ -22,5 +22,6 @@ def count_up_to(max):
         count += 1
 
 
-for num in count_up_to(5):
+for num in count_up_to(10):
     print(num)
+    print(max)
