@@ -26,8 +26,10 @@ for num in count_up_to(10):
     print(num)
     print(max)
 
+
 def complicated(x: int, y: int) -> int:
     return x + y
+
 
 def logger(func):
     def inner(x: int, y: int) -> int:
@@ -37,6 +39,7 @@ def logger(func):
         return result
 
     return inner
+
 
 complicated = logger(complicated)
 print(complicated(2, 3))
