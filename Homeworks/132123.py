@@ -51,3 +51,6 @@ print(squares)  # [1, 4, 9, 16]
 numbers = [1, 2, 3, 4, 5, 6]
 even = list(filter(lambda x: x % 2 == 0, numbers))
 print(even)  # 👉 [2, 4, 6]
+
+values = [0, 0, 1, 0]
+print(any(values))  # 👉 True
