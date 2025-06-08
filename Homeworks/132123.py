@@ -43,3 +43,7 @@ def logger(func):
 
 complicated = logger(complicated)
 print(complicated(2, 3))
+
+numbers = [1, 2, 3, 4]
+squares = list(map(lambda x: x ** 2, numbers))
+print(squares)  # [1, 4, 9, 16]
