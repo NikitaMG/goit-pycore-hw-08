@@ -60,3 +60,14 @@ print(all(values))  #  True
 
 values = [1, 0, 3]
 print(all(values))  #  False
+
+
+users = ["alice", "bob", "", "carol"]
+
+valid_users = list(filter(lambda name: name != "", users))
+print(valid_users)  # ['alice', 'bob', 'carol']
+
+has_empty = any(map(lambda name: name == "", users))
+print(has_empty)  # True
+
+print(all(map(bool, users)))  # False
