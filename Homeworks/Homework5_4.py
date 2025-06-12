@@ -9,6 +9,10 @@ def input_error(func):
             return func(*args, **kwargs)
         except ValueError:
             return "Input error: please check your command format."
+        except IndexError:
+            return "Enter a name."
+        except KeyError:
+            return "No such contact in the list."
 
     return inner
 
@@ -16,31 +20,33 @@ def input_error(func):
 @input_error
 def add_contact(args, contacts):
     if len(args) != 2:
-        return "Please enter a name and a phone number  (E.G.: add John 1234567890)."
+        raise ValueError
     name, phone = args
     contacts[name] = phone
     return "Contact added."
 
 
+@input_error
 def change_contact(args, contacts):
     if len(args) != 2:
-        return "Please enter a name and a new phone number (E.G.: change John 0987654321)."
+        raise ValueError
     name, new_phone = args
     if name in contacts:
         contacts[name] = new_phone
         return "Contact updated."
     else:
-        return f"contact{name} not found."
+        raise KeyError
 
 
+@input_error
 def show_phone(args, contacts):
     if len(args) != 1:
-        return "Please enter only name (E.G.: phone John)."
+        raise IndexError
     name = args[0]
     if name in contacts:
         return contacts[name]
     else:
-        return f"Contact with the name {name} not found."
+        raise KeyError
 
 
 def show_all(contacts):
@@ -81,7 +87,6 @@ def main():
 
         else:
             print("Invalid command.")
-
 
 
 if __name__ == "__main__":
