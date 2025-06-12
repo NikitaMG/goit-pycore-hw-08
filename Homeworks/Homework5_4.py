@@ -8,7 +8,7 @@ def input_error(func):
         try:
             return func(*args, **kwargs)
         except ValueError:
-            return "Input error: please check your command format."
+            return "Give me name and phone please."
         except IndexError:
             return "Enter a name."
         except KeyError:
