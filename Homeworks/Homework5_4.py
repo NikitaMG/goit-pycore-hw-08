@@ -3,6 +3,17 @@ def parse_input(user_input):
     return cmd.lower(), args
 
 
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return "Input error: please check your command format."
+
+    return inner
+
+
+@input_error
 def add_contact(args, contacts):
     if len(args) != 2:
         return "Please enter a name and a phone number  (E.G.: add John 1234567890)."
@@ -71,15 +82,6 @@ def main():
         else:
             print("Invalid command.")
 
-
-def input_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ValueError:
-            return "Input error: please check your command format."
-
-    return inner
 
 
 if __name__ == "__main__":
