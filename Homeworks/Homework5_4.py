@@ -72,5 +72,15 @@ def main():
             print("Invalid command.")
 
 
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return "Input error: please check your command format."
+
+    return inner
+
+
 if __name__ == "__main__":
     main()
