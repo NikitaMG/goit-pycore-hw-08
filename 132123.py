@@ -87,3 +87,20 @@ def retry(func):
                 print(f"Attempt {i+1} failed: {e}")
         return "Function failed after 3 attempts."
     return wrapper
+
+def decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Делаю что-то ДО вызова функции")
+        result = func(*args, **kwargs)
+        print("Делаю что-то ПОСЛЕ вызова функции")
+        return result
+    return wrapper
+
+@decorator
+def say_hello(name):
+    print(f"Привет, {name}!")
+
+# Делаю что-то ДО вызова функции
+# Привет, Никита!
+# Делаю что-то ПОСЛЕ вызова функции
+
