@@ -104,3 +104,26 @@ def say_hello(name):
 # Привет, Никита!
 # Делаю что-то ПОСЛЕ вызова функции
 
+def do_this():
+    print("LOG: calling function")
+    print("some work")
+
+def do_that():
+    print("LOG: calling function")
+    print("other work")
+# без декоратора сверху
+# c декоратором снизу
+def logger(func):
+    def wrapper(*args, **kwargs):
+        print("LOG: calling function")
+        return func(*args, **kwargs)
+    return wrapper
+
+@logger
+def do_this():
+    print("some work")
+
+@logger
+def do_that():
+    print("other work")
+
