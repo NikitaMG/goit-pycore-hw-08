@@ -54,6 +54,7 @@ def show_phone(args, contacts):
     else:
         raise KeyError
 
+
 @cheers_decor
 def show_all(contacts):
     if not contacts:
