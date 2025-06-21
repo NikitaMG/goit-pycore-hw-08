@@ -19,7 +19,7 @@ def input_error(func):
 
 def cheers_decor(func):
     def bye(*args, **kwargs):
-        result = func (*args, **kwargs)
+        result = func(*args, **kwargs)
         print("thank you!")
         return result
 
