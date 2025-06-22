@@ -1,14 +1,16 @@
-class User:
-    name = 'Anonymous'
-    age = 15
+class Person:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
 
-user1 = User()
-print(user1.name)
-print(user1.age)
+    def say_name(self) -> None:
+        print(f'Hi! I am {self.name} and I am {self.age} years old.')
 
-user2 = User()
-user2.name = "John"
-user2.age = 90
+    def set_age(self, age: int) -> None:
+        self.age = age
 
-print(user2.name)
-print(user2.age)
+bob = Person('Boris', 34)
+
+bob.say_name()
+bob.set_age(25)
+bob.say_name()
