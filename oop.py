@@ -1,16 +1,19 @@
-class Person:
-    def __init__(self, name: str, age: int):
+class Hero:
+    def __init__(self, name, nation, level):
         self.name = name
-        self.age = age
+        self.nation = nation
+        self.level = level
 
-    def say_name(self) -> None:
-        print(f'Hi! I am {self.name} and I am {self.age} years old.')
+    def attack(self, enemy):
+        if enemy.nation == "red":
+            print(f"{self.name} attack {enemy.nation}")
+        else:
+            print("it is friend!")
 
-    def set_age(self, age: int) -> None:
-        self.age = age
+    def fight_result(self, func):
+        pass
 
-bob = Person('Boris', 34)
 
-bob.say_name()
-bob.set_age(25)
-bob.say_name()
+ice_mage = Hero("nolan", "blue", 100)
+
+ice_mage.attack(Hero("Vitus", "red", "90"))
