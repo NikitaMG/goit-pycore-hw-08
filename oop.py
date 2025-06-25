@@ -1,3 +1,6 @@
+import random
+
+
 class Hero:
     def __init__(self, name, nation, level):
         self.name = name
@@ -5,11 +8,16 @@ class Hero:
         self.level = level
         self.last_fight = None
 
+    def __str__(self):
+        return f"{self.name} (nation: {self.nation}, Level: {self.level})"
+
     def attack(self, enemy):
         if enemy.nation == "red":
+            print(enemy)
             print(f"{self.name} attack {enemy.nation}")
             self.last_fight = enemy
         else:
+            print(enemy)
             print("it is friend!")
             self.last_fight = None
 
@@ -21,16 +29,19 @@ class Hero:
             print("No fight happened.")
 
 
-def calculate_result(hero1, hero2):
-    if hero1.level > hero2.level:
+def calculate_result(hero1, enemy):
+    if hero1.level > enemy.level:
         return f"{hero1.name} wins!"
-    elif hero1.level < hero2.level:
-        return f"{hero2.name} wins!"
+    elif hero1.level < enemy.level:
+        return f"{enemy.name} wins!"
     else:
         return "It's a draw!"
 
 
-ice_mage = Hero("nolan", "blue", 100)
+color = ["red", "blue", "green"]
 
-ice_mage.attack(Hero("Vitus", "red", 90))
+ice_mage = Hero("nolan", "blue", 100)
+other_mage = Hero("Warrior", random.choice(color), random.randint(60, 100))
+
+ice_mage.attack(other_mage)
 ice_mage.fight_result(calculate_result)
