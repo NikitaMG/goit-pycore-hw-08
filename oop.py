@@ -38,7 +38,7 @@ def calculate_result(hero1, enemy):
         return "It's a draw!"
 
 
-color = ["red", "blue", "green"]
+color = ["red", "blue", "green", "white"]
 
 ice_mage = Hero("nolan", "blue", 100)
 other_mage = Hero("Warrior", random.choice(color), random.randint(60, 100))
