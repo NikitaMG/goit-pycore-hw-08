@@ -8,6 +8,11 @@ class Hero:
         self.level = level
         self.last_fight = None
 
+
+loot = ["sword", "shield", "heal", "armour"]
+
+
+
     def __str__(self):
         return f"{self.name} (nation: {self.nation}, Level: {self.level})"
 
@@ -21,12 +26,22 @@ class Hero:
             print("it is friend!")
             self.last_fight = None
 
-    def fight_result(self, func):
-        if self.last_fight:
-            result = func(self, self.last_fight)
-            print(f"Fight result: {result}")
-        else:
-            print("No fight happened.")
+
+def fight_result(self, func):
+    if self.last_fight:
+        result = func(self, self.last_fight)
+        print(f"Fight result: {result}")
+    else:
+        print("No fight happened.")
+
+
+class Enemy(Hero):
+    def __init__(self, name, nation, level, drop):
+        super().__init__(name, nation, level)
+        self.drop = drop
+
+    def Drop_chance(self):
+        pass
 
 
 def calculate_result(hero1, enemy):
