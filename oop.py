@@ -35,7 +35,7 @@ class Enemy(Hero):
         super().__init__(name, nation, level)
 
     def drop_loot(self):
-        drop = ["sword", "shield", "poison", "boots"]
+        drop = ["sword", "shield", "poison", "boots", "Nothing"]
         return random.choice(drop)
 
 
