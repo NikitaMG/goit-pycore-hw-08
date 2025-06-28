@@ -13,6 +13,9 @@ class Hero:
             print(enemy)
             print(f"{self.name} attack {enemy.nation}")
             self.last_fight = enemy
+        elif enemy.level >= 90 and enemy.nation == "red":
+            print(enemy, "ELITE!!")
+            print(f"{self.name} attack {enemy.nation}")
         else:
             print(enemy)
             print("it is friend!")
@@ -40,8 +43,12 @@ class Enemy(Hero):
 
 
 def calculate_result(hero1, enemy):
-    if hero1.level > enemy.level:
+    if hero1.level > enemy.level and enemy.level >= 90:
+        elite_drop = ["Nothing", "Nothing", "Nothing", "Golden apple"]
         return (f"{hero1.name} wins!\n"
+                f"you have received: {random.choice(elite_drop)}")
+    elif hero1.level > enemy.level:
+        return (f"{hero1.name} wins! \n"
                 f"you have received: {enemy.drop_loot()}")
     elif hero1.level < enemy.level:
         return f"{enemy.name} wins!"
