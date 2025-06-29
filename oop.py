@@ -41,19 +41,23 @@ class Enemy(Hero):
         drop = ["sword", "shield", "poison", "boots", "Nothing"]
         return random.choice(drop)
 
+    def unique_drop(self):
+        udrop = ["Nothing", "Nothing", "Nothing", "Golden apple"]
+        return random.choice(udrop)
+
 
 def calculate_result(hero1, enemy):
-    if hero1.level > enemy.level and enemy.level >= 90:
-        elite_drop = ["Nothing", "Nothing", "Nothing", "Golden apple"]
-        return (f"{hero1.name} wins!\n"
-                f"you have received: {random.choice(elite_drop)}")
-    elif hero1.level > enemy.level:
-        return (f"{hero1.name} wins! \n"
-                f"you have received: {enemy.drop_loot()}")
+    if hero1.level > enemy.level:
+        if enemy.level >= 90:
+            return (f"{hero1.name} wins \n"
+                    f"You have received {enemy.unique_drop()}")
+        else:
+            return (f"{hero1.name} wins \n"
+                    f"You have received {enemy.drop_loot()}")
     elif hero1.level < enemy.level:
-        return f"{enemy.name} wins!"
+        return f"{hero1.level} lost!! to {enemy.nation} {enemy.name}"
     else:
-        return "It's a draw!"
+        return "draw!"
 
 
 color = ["red", "blue", "green", "white"]
