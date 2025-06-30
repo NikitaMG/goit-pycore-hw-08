@@ -2,10 +2,13 @@ import random
 
 
 class Hero:
-    def __init__(self, name, nation, level):
+    def __init__(self, name, nation, level, attack, power, health):
         self.name = name
         self.nation = nation
         self.level = level
+        self.attack = power * 2
+        self.power = power
+        self.health = health
         self.last_fight = None
 
     def attack(self, enemy):
