@@ -2,23 +2,23 @@ import random
 
 
 class Hero:
-    def __init__(self, name, nation, level, attack, power, health):
+    def __init__(self, name, nation, level, power):
         self.name = name
         self.nation = nation
         self.level = level
-        self.attack = power * 2
+        self.attacking = round(power + (level * 0.1),1)
         self.power = power
-        self.health = health
+        self.health = power * level
         self.last_fight = None
 
     def attack(self, enemy):
         if enemy.nation == "red":
             print(enemy)
-            print(f"{self.name} attack {enemy.nation}")
+            print(f"{self.name} level: {self.level} attack {enemy.nation}")
             self.last_fight = enemy
-        elif enemy.level >= 90 and enemy.nation == "red":
+        elif enemy.level >= 90:
             print(enemy, "ELITE!!")
-            print(f"{self.name} attack {enemy.nation}")
+            print(f"{self.name} level: {self.level} attack {enemy.nation}")
         else:
             print(enemy)
             print("it is friend!")
@@ -37,8 +37,8 @@ class Hero:
 
 
 class Enemy(Hero):
-    def __init__(self, name, nation, level):
-        super().__init__(name, nation, level)
+    def __init__(self, name, nation, level, power):
+        super().__init__(name, nation, level,power)
 
     def drop_loot(self):
         drop = ["sword", "shield", "poison", "boots", "Nothing"]
@@ -58,15 +58,15 @@ def calculate_result(hero1, enemy):
             return (f"{hero1.name} wins \n"
                     f"You have received {enemy.drop_loot()}")
     elif hero1.level < enemy.level:
-        return f"{hero1.level} lost!! to {enemy.nation} {enemy.name}"
+        return f"{hero1.namel} lost!! to {enemy.nation} {enemy.name}"
     else:
         return "draw!"
 
 
 color = ["red", "blue", "green", "white"]
 
-ice_mage = Hero("nolan", "blue", 100)
-other_mage = Enemy("Warrior", random.choice(color), random.randint(60, 100))
+ice_mage = Hero("nolan", "blue",random.randint(50,100),random.randint(1,10))
+other_mage = Enemy("Warrior", random.choice(color), random.randint(60, 100), random.randint(1,10))
 
 ice_mage.attack(other_mage)
 ice_mage.fight_result(calculate_result)
