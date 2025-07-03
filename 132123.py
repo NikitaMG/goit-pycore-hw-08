@@ -72,62 +72,62 @@
 #
 # print(all(map(bool, users)))  # False
 
-def nums(x):
-    numbers = {i:i*2 for i in range(x)}
-    return numbers
-
-print(nums(5))
-
-def retry(func):
-    def wrapper(*args, **kwargs):
-        for i in range(3):
-            try:
-                return func(*args, **kwargs)
-            except Exception as e:
-                print(f"Attempt {i+1} failed: {e}")
-        return "Function failed after 3 attempts."
-    return wrapper
-
-def decorator(func):
-    def wrapper(*args, **kwargs):
-        print("Делаю что-то ДО вызова функции")
-        result = func(*args, **kwargs)
-        print("Делаю что-то ПОСЛЕ вызова функции")
-        return result
-    return wrapper
-
-@decorator
-def say_hello(name):
-    print(f"Привет, {name}!")
-
-# Делаю что-то ДО вызова функции
-# Привет, Никита!
-# Делаю что-то ПОСЛЕ вызова функции
-
-def do_this():
-    print("LOG: calling function")
-    print("some work")
-
-def do_that():
-    print("LOG: calling function")
-    print("other work")
-# без декоратора сверху
-# c декоратором снизу
-def logger(func):
-    def wrapper(*args, **kwargs):
-        print("LOG: calling function")
-        return func(*args, **kwargs)
-    return wrapper
-
-@logger
-def do_this():
-    print("some work")
-
-@logger
-def do_that():
-    print("other work")
-
-#любая функция может быть декоратором если она принимает функцию как аргумент
+# def nums(x):
+#     numbers = {i:i*2 for i in range(x)}
+#     return numbers
+#
+# print(nums(5))
+#
+# def retry(func):
+#     def wrapper(*args, **kwargs):
+#         for i in range(3):
+#             try:
+#                 return func(*args, **kwargs)
+#             except Exception as e:
+#                 print(f"Attempt {i+1} failed: {e}")
+#         return "Function failed after 3 attempts."
+#     return wrapper
+#
+# def decorator(func):
+#     def wrapper(*args, **kwargs):
+#         print("Делаю что-то ДО вызова функции")
+#         result = func(*args, **kwargs)
+#         print("Делаю что-то ПОСЛЕ вызова функции")
+#         return result
+#     return wrapper
+#
+# @decorator
+# def say_hello(name):
+#     print(f"Привет, {name}!")
+#
+# # Делаю что-то ДО вызова функции
+# # Привет, Никита!
+# # Делаю что-то ПОСЛЕ вызова функции
+#
+# def do_this():
+#     print("LOG: calling function")
+#     print("some work")
+#
+# def do_that():
+#     print("LOG: calling function")
+#     print("other work")
+# # без декоратора сверху
+# # c декоратором снизу
+# def logger(func):
+#     def wrapper(*args, **kwargs):
+#         print("LOG: calling function")
+#         return func(*args, **kwargs)
+#     return wrapper
+#
+# @logger
+# def do_this():
+#     print("some work")
+#
+# @logger
+# def do_that():
+#     print("other work")
+#
+# #любая функция может быть декоратором если она принимает функцию как аргумент
 
 from enum import Enum, auto
 
@@ -152,8 +152,8 @@ class Order:
 order1 = Order("Ноутбук", OrderStatus.NEW)
 order2 = Order("Книга", OrderStatus.NEW)
 
-order1.display_status()
-order2.display_status()
+# order1.display_status()
+# order2.display_status()
 
 order1.update_status(OrderStatus.PROCESSING)
 order2.update_status(OrderStatus.SHIPPED)
