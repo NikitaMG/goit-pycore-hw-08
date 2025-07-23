@@ -43,6 +43,13 @@ class Record:
     def edit_phone(self, old_number, new_number):
         if not self.find_phone(old_number):
             raise ValueError(f"Phone number {old_number} not found")
+
+        try:
+            new_phone = Phone(new_number)
+        except ValueError:
+
+            raise ValueError(f"Invalid new phone number: {new_number}")
+
         self.remove_phone(old_number)
         self.add_phone(new_number)
         return True
