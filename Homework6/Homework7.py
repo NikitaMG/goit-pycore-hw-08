@@ -173,13 +173,15 @@ def birthdays(args, book: AddressBook):
 
 
 @input_error
-def change_contact(args, contacts):
-    name, new_phone = args
-    if name in contacts:
-        contacts[name] = new_phone
-        return "Contact updated."
-    else:
-        raise KeyError
+def change_contact(args, book: AddressBook):
+    if len(args) != 3:
+        raise ValueError("Not correct usage, try: change [name] [old_phone] [new_phone]")
+    name, old_phone, new_phone = args
+    contact = book.find(name)
+    if not contact:
+        return f"Contact {name} does not exist!"
+    contact.edit_phone(old_phone, new_phone)
+    return "Contact updated."
 
 
 @input_error
