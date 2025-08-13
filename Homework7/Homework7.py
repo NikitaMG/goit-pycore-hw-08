@@ -1,8 +1,6 @@
 from collections import UserDict
 import datetime
 
-from Homeworks.Homework5_4 import input_error
-
 
 class Field:
     def __init__(self, value):
@@ -19,11 +17,8 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, value):
-        if len(value)!=10:
-            raise ValueError ("Phone must contain 10 characters")
-        elif not self.is_correct(value):
+        if not self.is_correct(value):
             raise ValueError("Phone number is not correct!")
-
         super().__init__(value)
 
     def is_correct(self, value):
@@ -33,11 +28,11 @@ class Phone(Field):
 class Birthday(Field):
     def __init__(self, value):
         try:
-            reformated_date = datetime.datetime.strptime(value, "%d.%m.%Y").date()
+            datetime.datetime.strptime(value, "%d.%m.%Y").date()
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
 
-        super().__init__(reformated_date)
+        super().__init__(value)
 
     def __str__(self):
         return self.value.strftime("%d.%m.%Y")
@@ -53,10 +48,7 @@ class Record:
         self.birthday = Birthday(birthday)
 
     def show_birthday(self):
-        if self.birthday:
-            return str(self.birthday)
-        else:
-            return "Birthday date does not set"
+        return self.birthday
 
     def add_phone(self, phone_number: str):
         number = Phone(phone_number)
@@ -72,12 +64,6 @@ class Record:
     def edit_phone(self, old_number, new_number):
         if not self.find_phone(old_number):
             raise ValueError(f"Phone number {old_number} not found")
-
-        try:
-            new_phone = Phone(new_number)
-        except ValueError:
-
-            raise ValueError(f"Invalid new phone number: {new_number}")
 
         self.remove_phone(old_number)
         self.add_phone(new_number)
@@ -135,71 +121,59 @@ class AddressBook(UserDict):
         return '\n'.join(str(record) for record in self.data.values())
 
 
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return "Give me name and phone please."
+        except IndexError:
+            return "Enter a name."
+        except KeyError:
+            return "No such contact in the list."
+        except AttributeError:
+            "No such contact in the list."
+
+    return inner
+
+
 @input_error
 def add_birthday(args, book: AddressBook):
-    if len(args) != 2:
-        raise ValueError("Not correct usage, try: add-birthday [name] [DD.MM.YYYY]")
-
     name, birthdays_str = args
-
     contact = book.find(name)
-    if not contact:
-        return f"Contact {name} does not exist!"
-
     contact.add_birthday(birthdays_str)
-    return f"Birthday date for {name} added: {birthdays_str}"
+    return True
 
 
 @input_error
 def show_birthday(args, book: AddressBook):
-    if not args:
-        return "Enter contact`s name"
     name = args[0]
     contact = book.find(name)
-    if not contact:
-        return f"contact {name} does not exist!"
     return contact.show_birthday()
 
 
 @input_error
 def birthdays(args, book: AddressBook):
-    result = book.get_upcoming_birthdays()
-    if not result:
-        return "There are no birthdays in the 7 days"
-    birthday_output = []
-    for i in result:
-        birthday_output.append(f"{i['name']}: {i['birthday']}")
-    return '\n'.join(birthday_output)
+    return book.get_upcoming_birthdays()
 
 
 @input_error
 def change_contact(args, book: AddressBook):
-    if len(args) != 3:
-        raise ValueError("Not correct usage, try: change [name] [old_phone] [new_phone]")
     name, old_phone, new_phone = args
     contact = book.find(name)
-    if not contact:
-        return f"Contact {name} does not exist!"
     contact.edit_phone(old_phone, new_phone)
-    return "Contact updated."
+    return True
 
 
 @input_error
-def show_phone(args, contacts):
+def show_phone(args, book:AddressBook):
     name = args[0]
-    if name in contacts:
-        return contacts[name]
-    else:
-        raise KeyError
+    contacts = book.find(name)
+    return [phone.value for phone in contacts.phones]
 
 
-def show_all(contacts):
-    if not contacts:
-        return "Contact list is empty."
-    result = "Contacts:\n"
-    for name, phone in contacts.items():
-        result += f"{name}: {phone}\n"
-    return result.strip()
+def show_all(book: AddressBook):
+    return list(book.data.values())
 
 
 def parse_input(user_input):
