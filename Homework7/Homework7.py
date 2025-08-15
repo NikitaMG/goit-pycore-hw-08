@@ -65,8 +65,8 @@ class Record:
         if not self.find_phone(old_number):
             raise ValueError(f"Phone number {old_number} not found")
 
-        self.remove_phone(old_number)
         self.add_phone(new_number)
+        self.remove_phone(old_number)
         return True
 
     def find_phone(self, phone_number):
@@ -218,3 +218,7 @@ def main():
             print(birthdays(args, book))
         else:
             print("Invalid command.")
+
+
+if __name__ == "__main__":
+    main()
