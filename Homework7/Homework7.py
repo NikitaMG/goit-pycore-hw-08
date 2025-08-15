@@ -172,6 +172,21 @@ def show_phone(args, book:AddressBook):
     return [phone.value for phone in contacts.phones]
 
 
+@input_error
+def add_contact(args, book: AddressBook):
+    name, phone, *_ = args
+    record = book.find(name)
+    message = "Contact updated."
+    if record is None:
+        record = Record(name)
+        book.add_record(record)
+        message = "Contact added."
+    if phone:
+        record.add_phone(phone)
+    return message
+
+
+
 def show_all(book: AddressBook):
     return list(book.data.values())
 
@@ -186,7 +201,7 @@ def main():
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
-        command, *args = parse_input(user_input)
+        command, args = parse_input(user_input)
 
         if command in ["close", "exit"]:
             print("Good bye!")
@@ -196,7 +211,7 @@ def main():
             print("How can I help you?")
 
         elif command == "add":
-            print(add_birthday(args, book))
+            print(add_contact(args, book))
 
         elif command == "change":
             print(change_contact(args, book))
