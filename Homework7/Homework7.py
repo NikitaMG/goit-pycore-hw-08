@@ -28,11 +28,14 @@ class Phone(Field):
 class Birthday(Field):
     def __init__(self, value):
         try:
-            datetime.datetime.strptime(value, "%d.%m.%Y").date()
+            p_date = datetime.datetime.strptime(value, "%d.%m.%Y").date()
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
 
-        super().__init__(value)
+        if p_date.year < 1900 or p_date.year >= datetime.datetime.today().year:
+            raise ValueError("Incorrect Year!")
+        self.value = p_date
+        super().__init__(p_date)
 
     def __str__(self):
         return self.value.strftime("%d.%m.%Y")
@@ -125,14 +128,14 @@ def input_error(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except ValueError:
-            return "Give me name and phone please."
+        except ValueError as e:
+            return f"Error {e}"
         except IndexError:
             return "Enter a name."
         except KeyError:
             return "No such contact in the list."
         except AttributeError:
-            "No such contact in the list."
+            return "No such contact in the list."
 
     return inner
 
@@ -166,7 +169,7 @@ def change_contact(args, book: AddressBook):
 
 
 @input_error
-def show_phone(args, book:AddressBook):
+def show_phone(args, book: AddressBook):
     name = args[0]
     contacts = book.find(name)
     return [phone.value for phone in contacts.phones]
@@ -186,9 +189,10 @@ def add_contact(args, book: AddressBook):
     return message
 
 
-
 def show_all(book: AddressBook):
-    return list(book.data.values())
+    if not book.data:
+        return "No contacts!"
+    return "\n".join(str(record) for record in book.data.values())
 
 
 def parse_input(user_input):
@@ -201,6 +205,8 @@ def main():
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
+        if not user_input:
+            continue
         command, args = parse_input(user_input)
 
         if command in ["close", "exit"]:
@@ -229,8 +235,8 @@ def main():
             print(show_birthday(args, book))
 
         elif command == "birthdays":
-
             print(birthdays(args, book))
+
         else:
             print("Invalid command.")
 
