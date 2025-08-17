@@ -26,7 +26,7 @@ class Phone(Field):
 
 
 class Birthday(Field):
-    def __init__(self, value):
+    def __init__(self, value: str):
         try:
             p_date = datetime.datetime.strptime(value, "%d.%m.%Y").date()
         except ValueError:
@@ -34,12 +34,12 @@ class Birthday(Field):
 
         if p_date.year < 1900 or p_date.year >= datetime.datetime.today().year:
             raise ValueError("Incorrect Year!")
-        self.value = p_date
-        super().__init__(p_date)
+
+        self.value = value
+        super().__init__(value)
 
     def __str__(self):
-        return self.value.strftime("%d.%m.%Y")
-
+        return self.value
 
 class Record:
     def __init__(self, name):
@@ -79,7 +79,8 @@ class Record:
         return None
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
+        birthday = str(self.birthday) if self.birthday else "No birthday"
+        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}, Birthday: {birthday}"
 
 
 class AddressBook(UserDict):
@@ -101,7 +102,7 @@ class AddressBook(UserDict):
 
         for i in self.data.values():
             if i.birthday:
-                birthday_date = i.birthday.value
+                birthday_date = datetime.datetime.strptime(i.birthday.value,"%d.%m.%Y").date()
                 this_year_birthday = birthday_date.replace(year=today.year)
 
                 if this_year_birthday < today:
