@@ -35,7 +35,6 @@ class Birthday(Field):
         if p_date.year < 1900 or p_date.year >= datetime.datetime.today().year:
             raise ValueError("Incorrect Year!")
 
-        self.value = value
         super().__init__(value)
 
     def __str__(self):
